@@ -62,24 +62,6 @@ const structure = [
   { id: 9, label: "FAQ", link: "", icon: <FAQIcon /> },
   { id: 10, type: "divider" },
   { id: 11, type: "title", label: "PROJECTS" },
-  {
-    id: 12,
-    label: "My recent",
-    link: "",
-    icon: <Dot size="small" color="warning" />,
-  },
-  {
-    id: 13,
-    label: "Starred",
-    link: "",
-    icon: <Dot size="small" color="primary" />,
-  },
-  {
-    id: 14,
-    label: "Background",
-    link: "",
-    icon: <Dot size="small" color="secondary" />,
-  },
 ];
 
 function Sidebar({ location }) {
@@ -93,7 +75,7 @@ function Sidebar({ location }) {
   // local
   var [isPermanent, setPermanent] = useState(true);
 
-  useEffect(function() {
+  useEffect(function () {
     window.addEventListener("resize", handleWindowWidthChange);
     handleWindowWidthChange();
     return function cleanup() {
@@ -127,7 +109,7 @@ function Sidebar({ location }) {
         </IconButton>
       </div>
       <List className={classes.sidebarList}>
-        {structure.map(link => (
+        {structure.map((link) => (
           <SidebarLink
             key={link.id}
             location={location}

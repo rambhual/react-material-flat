@@ -7,7 +7,7 @@ import {
   Menu,
   MenuItem,
   Fab,
-  Link
+  Link,
 } from "@material-ui/core";
 import {
   Menu as MenuIcon,
@@ -136,11 +136,17 @@ export default function Header(props) {
             />
           )}
         </IconButton>
-        <Typography variant="h6" weight="medium" className={classes.logotype}>
-          React Material Admin
-        </Typography>
+
         <div className={classes.grow} />
-        <Button component={Link} href="https://flatlogic.com/templates/react-material-admin-full" variant={"outlined"} color={"secondary"} style={{marginRight: 24}}>Unlock full version</Button>
+        <Button
+          component={Link}
+          href="https://flatlogic.com/templates/react-material-admin-full"
+          variant={"outlined"}
+          color={"secondary"}
+          style={{ marginRight: 24 }}
+        >
+          Unlock full version
+        </Button>
         <div
           className={classNames(classes.search, {
             [classes.searchFocused]: isSearchOpen,
@@ -166,7 +172,7 @@ export default function Header(props) {
           color="inherit"
           aria-haspopup="true"
           aria-controls="mail-menu"
-          onClick={e => {
+          onClick={(e) => {
             setNotificationsMenu(e.currentTarget);
             setIsNotificationsUnread(false);
           }}
@@ -183,7 +189,7 @@ export default function Header(props) {
           color="inherit"
           aria-haspopup="true"
           aria-controls="mail-menu"
-          onClick={e => {
+          onClick={(e) => {
             setMailMenu(e.currentTarget);
             setIsMailsUnread(false);
           }}
@@ -201,7 +207,7 @@ export default function Header(props) {
           color="inherit"
           className={classes.headerMenuButton}
           aria-controls="profile-menu"
-          onClick={e => setProfileMenu(e.currentTarget)}
+          onClick={(e) => setProfileMenu(e.currentTarget)}
         >
           <AccountIcon classes={{ root: classes.headerIcon }} />
         </IconButton>
@@ -227,7 +233,7 @@ export default function Header(props) {
               {messages.length} New Messages
             </Typography>
           </div>
-          {messages.map(message => (
+          {messages.map((message) => (
             <MenuItem key={message.id} className={classes.messageNotification}>
               <div className={classes.messageNotificationSide}>
                 <UserAvatar color={message.variant} name={message.name} />
@@ -268,7 +274,7 @@ export default function Header(props) {
           className={classes.headerMenu}
           disableAutoFocusItem
         >
-          {notifications.map(notification => (
+          {notifications.map((notification) => (
             <MenuItem
               key={notification.id}
               onClick={() => setNotificationsMenu(null)}

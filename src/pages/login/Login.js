@@ -12,7 +12,7 @@ import {
   Fade,
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
 
 // styles
@@ -27,8 +27,9 @@ import {
   registerWithEmailAndPassword,
 } from "../../redux/user/user.action";
 
-function Login(props) {
+function Login() {
   const classes = useStyles();
+  const { errorMessage, loading } = useSelector(state => state.user);
   const { register, handleSubmit, errors } = useForm({
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -37,8 +38,6 @@ function Login(props) {
     },
   });
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [activeTabId, setActiveTabId] = useState(0);
 
   const handleLoginSubmit = data => {
@@ -93,7 +92,7 @@ function Login(props) {
                   </Typography>
                   <div className={classes.formDivider} />
                 </div>
-                <Fade in={error}>
+                <Fade in={false}>
                   <Typography
                     color="secondary"
                     className={classes.errorMessage}
@@ -109,6 +108,7 @@ function Login(props) {
                     },
                   }}
                   name="email"
+                  error={!!errors.email}
                   inputRef={register({ required: true })}
                   margin="normal"
                   placeholder="Email Address"
@@ -125,12 +125,13 @@ function Login(props) {
                   }}
                   inputRef={register({ required: true })}
                   margin="normal"
+                  error={!!errors.password}
                   placeholder="Password"
                   type="password"
                   fullWidth
                 />
                 <div className={classes.formButtons}>
-                  {isLoading ? (
+                  {loading ? (
                     <CircularProgress
                       size={26}
                       className={classes.loginLoader}
@@ -165,7 +166,7 @@ function Login(props) {
                 <Typography variant="h2" className={classes.subGreeting}>
                   Create your account
                 </Typography>
-                <Fade in={error}>
+                <Fade in={false}>
                   <Typography
                     color="secondary"
                     className={classes.errorMessage}
@@ -183,6 +184,7 @@ function Login(props) {
                     },
                   }}
                   margin="normal"
+                  error={!!errors.displayName}
                   placeholder="Full Name"
                   type="text"
                   fullWidth
@@ -199,6 +201,7 @@ function Login(props) {
                   margin="normal"
                   placeholder="Email Address"
                   type="email"
+                  error={!!errors.email}
                   fullWidth
                 />
                 <TextField
@@ -212,11 +215,12 @@ function Login(props) {
                   }}
                   margin="normal"
                   placeholder="Password"
+                  error={!!errors.password}
                   type="password"
                   fullWidth
                 />
                 <div className={classes.creatingButtonContainer}>
-                  {isLoading ? (
+                  {loading ? (
                     <CircularProgress size={26} />
                   ) : (
                     <Button

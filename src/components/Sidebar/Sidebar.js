@@ -45,8 +45,8 @@ const structure = [
   },
   {
     id: 2,
-    label: "Tables",
-    link: "/app/tables",
+    label: "Home",
+    link: "/app/home",
     icon: <TableIcon />,
     active: true,
   },

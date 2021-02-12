@@ -16,22 +16,13 @@ function HomeView({ title, imageUrl, linkUrl }) {
       <CardActionArea component={Link} to={`${linkUrl}`}>
         <CardMedia className={classes.media} image={imageUrl} title={title} />
         <CardContent>
-          <Typography component="h2">{title}</Typography>
+          <Typography component="h2">{title.toLowerCase()}</Typography>
           <Typography component="h2">
             Lizards are a widespread group of desquamate reptiles, with over
-            6,000 species, ranging Lizards are a widespread group of squamose
-            reptiles, with over 6,000 species, ranging
+            6,000 species,
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
     </Card>
   );
 }

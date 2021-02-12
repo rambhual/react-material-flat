@@ -11,14 +11,12 @@ import {
   TextField,
   Fade,
 } from "@material-ui/core";
+
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
 
-// styles
 import useStyles from "./styles";
-
-// logo
 import logo from "./logo.svg";
 import google from "../../images/google.svg";
 import {
@@ -27,14 +25,13 @@ import {
   registerWithEmailAndPassword,
 } from "../../redux/user/user.action";
 
-function Login() {
+const Login = () => {
   const classes = useStyles();
   const { errorMessage, loading } = useSelector(state => state.user);
   const { register, handleSubmit, errors } = useForm({
     reValidateMode: "onSubmit",
     defaultValues: {
       email: "sanjaysahani@gmail.com",
-      password: "Ramprit@1234",
     },
   });
   const dispatch = useDispatch();
@@ -53,7 +50,9 @@ function Login() {
     <Grid container className={classes.container}>
       <div className={classes.logotypeContainer}>
         <img src={logo} alt="logo" className={classes.logotypeImage} />
-        <Typography className={classes.logotypeText}>Material Admin</Typography>
+        <Typography className={classes.logotypeText}>
+          Mobile Programming
+        </Typography>
       </div>
       <div className={classes.formContainer}>
         <div className={classes.form}>
@@ -92,7 +91,7 @@ function Login() {
                   </Typography>
                   <div className={classes.formDivider} />
                 </div>
-                <Fade in={false}>
+                <Fade in={errorMessage}>
                   <Typography
                     color="secondary"
                     className={classes.errorMessage}
@@ -166,7 +165,7 @@ function Login() {
                 <Typography variant="h2" className={classes.subGreeting}>
                   Create your account
                 </Typography>
-                <Fade in={false}>
+                <Fade in={errorMessage}>
                   <Typography
                     color="secondary"
                     className={classes.errorMessage}
@@ -266,6 +265,6 @@ function Login() {
       </div>
     </Grid>
   );
-}
+};
 
 export default withRouter(Login);

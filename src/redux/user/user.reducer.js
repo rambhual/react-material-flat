@@ -17,6 +17,7 @@ export const authReducer = (state = initialState, { type, payload }) => {
       });
     case authTypes.LOGIN_SUCCESS:
     case authTypes.REGISTER_SUCCESS:
+    case authTypes.LOAD_USER_SUCCESS:
       return Object.assign({}, state, {
         loading: false,
         isAuthenticated: true,
@@ -29,6 +30,18 @@ export const authReducer = (state = initialState, { type, payload }) => {
       return Object.assign({}, state, {
         loading: false,
         errorMessage: payload,
+      });
+
+    case authTypes.CLEAR_ALL:
+      return Object.assign({}, state, {
+        loading: false,
+        errorMessage: "",
+      });
+    case authTypes.LOG_OUT_SUCCESS:
+      return Object.assign({}, state, {
+        loading: false,
+        errorMessage: false,
+        isAuthenticated: false,
       });
 
     default:

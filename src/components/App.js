@@ -1,18 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-// components
 import Layout from "./Layout";
-
-// pages
 import Error from "../pages/error";
 import Login from "../pages/login";
+import { auth } from "../firebase/firebase.config";
+import { authTypes } from "../redux/user/user.types";
 
-// context
-
-export default function App() {
+const App = () => {
   const { isAuthenticated } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const authSubscription = auth.onAuthStateChanged(auth => {
+      if (auth) {
+        const {
+          displayName,
+          email,
+          photoURL,
+          emailVerified,
+          phoneNumber,
+        } = auth;
+        dispatch({
+          type: authTypes.LOAD_USER_SUCCESS,
+          payload: {
+            displayName,
+            email,
+            photoURL,
+            emailVerified,
+            phoneNumber,
+          },
+        });
+      } else {
+        dispatch({ type: authTypes.CLEAR_ALL });
+      }
+    });
+    return () => authSubscription;
+  }, [dispatch]);
 
   return (
     <HashRouter>
@@ -74,4 +98,5 @@ export default function App() {
       />
     );
   }
-}
+};
+export default App;

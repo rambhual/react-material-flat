@@ -7,6 +7,7 @@ import {
   Menu,
   MenuItem,
   Fab,
+  Avatar,
 } from "@material-ui/core";
 import {
   Menu as MenuIcon,
@@ -18,22 +19,20 @@ import {
   ArrowBack as ArrowBackIcon,
 } from "@material-ui/icons";
 import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
 
-// styles
 import useStyles from "./styles";
 
-// components
 import { Badge, Typography } from "../Wrappers/Wrappers";
 import Notification from "../Notification/Notification";
 import UserAvatar from "../UserAvatar/UserAvatar";
 
-// context
 import {
   useLayoutState,
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
-import { useUserDispatch, signOut } from "../../context/UserContext";
+import { logout } from "../../redux/user/user.action";
 
 const messages = [
   {
@@ -90,13 +89,11 @@ const notifications = [
 
 export default function Header(props) {
   var classes = useStyles();
-
-  // global
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector(state => state.user);
   var layoutState = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
-  var userDispatch = useUserDispatch();
 
-  // local
   var [mailMenu, setMailMenu] = useState(null);
   var [isMailsUnread, setIsMailsUnread] = useState(true);
   var [notificationsMenu, setNotificationsMenu] = useState(null);
@@ -199,7 +196,14 @@ export default function Header(props) {
           aria-controls="profile-menu"
           onClick={e => setProfileMenu(e.currentTarget)}
         >
-          <AccountIcon classes={{ root: classes.headerIcon }} />
+          {currentUser.photoURL ? (
+            <Avatar
+              src={currentUser.photoURL}
+              alt={currentUser.displayName}
+            ></Avatar>
+          ) : (
+            <AccountIcon classes={{ root: classes.headerIcon }} />
+          )}
         </IconButton>
         <Menu
           id="mail-menu"
@@ -285,7 +289,9 @@ export default function Header(props) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              John Smith
+              {currentUser?.displayName
+                ? currentUser?.displayName
+                : "John Smith"}
             </Typography>
             <Typography
               className={classes.profileMenuLink}
@@ -324,7 +330,7 @@ export default function Header(props) {
             <Typography
               className={classes.profileMenuLink}
               color="primary"
-              onClick={() => signOut(userDispatch, props.history)}
+              onClick={() => dispatch(logout())}
             >
               Sign Out
             </Typography>

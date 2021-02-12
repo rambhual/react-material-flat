@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
 import {
   Home as HomeIcon,
@@ -29,49 +29,63 @@ import {
 } from "../../context/LayoutContext";
 
 const structure = [
-  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
+  {
+    id: 0,
+    label: "Dashboard",
+    link: "/app/dashboard",
+    icon: <HomeIcon />,
+    active: true,
+  },
   {
     id: 1,
     label: "Typography",
     link: "/app/typography",
     icon: <TypographyIcon />,
+    active: false,
   },
-  { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
+  {
+    id: 2,
+    label: "Tables",
+    link: "/app/tables",
+    icon: <TableIcon />,
+    active: true,
+  },
   {
     id: 3,
     label: "Notifications",
     link: "/app/notifications",
     icon: <NotificationsIcon />,
+    active: false,
   },
   {
     id: 4,
     label: "UI Elements",
     link: "/app/ui",
     icon: <UIElementsIcon />,
+    active: true,
     children: [
-      { label: "Icons", link: "/app/ui/icons" },
-      { label: "Charts", link: "/app/ui/charts" },
-      { label: "Maps", link: "/app/ui/maps" },
+      { id: 5, label: "Icons", link: "/app/ui/icons" },
+      { id: 6, label: "Charts", link: "/app/ui/charts" },
+      { id: 7, label: "Maps", link: "/app/ui/maps" },
     ],
   },
-  { id: 5, type: "divider" },
-  { id: 6, type: "title", label: "HELP" },
-  { id: 7, label: "Library", link: "", icon: <LibraryIcon /> },
-  { id: 8, label: "Support", link: "", icon: <SupportIcon /> },
-  { id: 9, label: "FAQ", link: "", icon: <FAQIcon /> },
-  { id: 10, type: "divider" },
-  { id: 11, type: "title", label: "PROJECTS" },
+  { id: 8, type: "divider", active: false },
+
+  { id: 9, type: "title", label: "HELP", active: false },
+  { id: 10, label: "Library", link: "", icon: <LibraryIcon />, active: false },
+  { id: 11, label: "Support", link: "", icon: <SupportIcon />, active: false },
+  { id: 12, label: "FAQ", link: "", icon: <FAQIcon />, active: false },
+  { id: 13, type: "divider" },
+  { id: 14, type: "title", label: "PROJECTS" },
 ];
 
 function Sidebar({ location }) {
   var classes = useStyles();
   var theme = useTheme();
 
-  // global
   var { isSidebarOpened } = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
 
-  // local
   var [isPermanent, setPermanent] = useState(true);
 
   useEffect(function() {
@@ -109,12 +123,15 @@ function Sidebar({ location }) {
       </div>
       <List className={classes.sidebarList}>
         {structure.map(link => (
-          <SidebarLink
-            key={link.id}
-            location={location}
-            isSidebarOpened={isSidebarOpened}
-            {...link}
-          />
+          <Fragment key={link.id}>
+            {link.active && (
+              <SidebarLink
+                location={location}
+                isSidebarOpened={isSidebarOpened}
+                {...link}
+              />
+            )}
+          </Fragment>
         ))}
       </List>
     </Drawer>

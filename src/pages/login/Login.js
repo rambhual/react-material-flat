@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+
 import {
   Grid,
   CircularProgress,
@@ -19,32 +21,34 @@ import useStyles from "./styles";
 // logo
 import logo from "./logo.svg";
 import google from "../../images/google.svg";
-
-// context
-import { useUserDispatch, loginUser } from "../../context/UserContext";
-import { loginWithGoogle } from "../../redux/user/user.action";
+import {
+  loginWithEmailAndPassword,
+  loginWithGoogle,
+  registerWithEmailAndPassword,
+} from "../../redux/user/user.action";
 
 function Login(props) {
-  var classes = useStyles();
+  const classes = useStyles();
+  const { register, handleSubmit, errors } = useForm({
+    reValidateMode: "onSubmit",
+    defaultValues: {
+      email: "sanjaysahani@gmail.com",
+      password: "Ramprit@1234",
+    },
+  });
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [activeTabId, setActiveTabId] = useState(0);
 
-  // global
-  var userDispatch = useUserDispatch();
-
-  // local
-  var [isLoading, setIsLoading] = useState(false);
-  var [error, setError] = useState(null);
-  var [activeTabId, setActiveTabId] = useState(0);
-  var [nameValue, setNameValue] = useState("");
-  var [loginValue, setLoginValue] = useState("");
-  var [passwordValue, setPasswordValue] = useState("");
-
-  const handleLoginSubmit = params => {
-    console.log("Login submitted");
+  const handleLoginSubmit = data => {
+    console.log("Login submitted", data);
+    dispatch(loginWithEmailAndPassword(data));
   };
 
-  const handleRegisterSubmit = params => {
-    console.log("Register submitted");
+  const handleRegisterSubmit = data => {
+    console.log("Register submitted", data);
+    dispatch(registerWithEmailAndPassword(data));
   };
   return (
     <Grid container className={classes.container}>
@@ -66,7 +70,7 @@ function Login(props) {
           </Tabs>
           {activeTabId === 0 && (
             <React.Fragment>
-              <form onSubmit={handleLoginSubmit}>
+              <form onSubmit={handleSubmit(handleLoginSubmit)}>
                 <Typography variant="h1" className={classes.greeting}>
                   Good Morning, User
                 </Typography>
@@ -98,30 +102,28 @@ function Login(props) {
                   </Typography>
                 </Fade>
                 <TextField
-                  id="email"
                   InputProps={{
                     classes: {
                       underline: classes.textFieldUnderline,
                       input: classes.textField,
                     },
                   }}
-                  value={loginValue}
-                  onChange={e => setLoginValue(e.target.value)}
+                  name="email"
+                  inputRef={register({ required: true })}
                   margin="normal"
-                  placeholder="Email Adress"
+                  placeholder="Email Address"
                   type="email"
                   fullWidth
                 />
                 <TextField
-                  id="password"
+                  name="password"
                   InputProps={{
                     classes: {
                       underline: classes.textFieldUnderline,
                       input: classes.textField,
                     },
                   }}
-                  value={passwordValue}
-                  onChange={e => setPasswordValue(e.target.value)}
+                  inputRef={register({ required: true })}
                   margin="normal"
                   placeholder="Password"
                   type="password"
@@ -156,7 +158,7 @@ function Login(props) {
           )}
           {activeTabId === 1 && (
             <React.Fragment>
-              <form onSubmit={handleRegisterSubmit}>
+              <form onSubmit={handleSubmit(handleRegisterSubmit)}>
                 <Typography variant="h1" className={classes.greeting}>
                   Welcome!
                 </Typography>
@@ -172,45 +174,42 @@ function Login(props) {
                   </Typography>
                 </Fade>
                 <TextField
-                  id="name"
+                  name="displayName"
+                  inputRef={register({ required: true })}
                   InputProps={{
                     classes: {
                       underline: classes.textFieldUnderline,
                       input: classes.textField,
                     },
                   }}
-                  value={nameValue}
-                  onChange={e => setNameValue(e.target.value)}
                   margin="normal"
                   placeholder="Full Name"
                   type="text"
                   fullWidth
                 />
                 <TextField
-                  id="email"
+                  name="email"
+                  inputRef={register({ required: true })}
                   InputProps={{
                     classes: {
                       underline: classes.textFieldUnderline,
                       input: classes.textField,
                     },
                   }}
-                  value={loginValue}
-                  onChange={e => setLoginValue(e.target.value)}
                   margin="normal"
-                  placeholder="Email Adress"
+                  placeholder="Email Address"
                   type="email"
                   fullWidth
                 />
                 <TextField
-                  id="password"
+                  name="password"
+                  inputRef={register({ required: true })}
                   InputProps={{
                     classes: {
                       underline: classes.textFieldUnderline,
                       input: classes.textField,
                     },
                   }}
-                  value={passwordValue}
-                  onChange={e => setPasswordValue(e.target.value)}
                   margin="normal"
                   placeholder="Password"
                   type="password"

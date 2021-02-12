@@ -31,7 +31,7 @@ export default function App() {
     </HashRouter>
   );
 
-  // #######################################################################
+  // ############################# Private Route ##########################################
 
   function PrivateRoute({ component, ...rest }) {
     return (
@@ -54,6 +54,8 @@ export default function App() {
       />
     );
   }
+
+  // ############################# Public Route ##########################################
 
   function PublicRoute({ component, ...rest }) {
     return (

@@ -20,6 +20,7 @@ import Charts from "../../pages/charts";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
+import HomePage from "../../pages/home/Home";
 
 function Layout(props) {
   var classes = useStyles();
@@ -42,6 +43,7 @@ function Layout(props) {
             <Route path="/app/dashboard" component={Dashboard} />
             <Route path="/app/typography" component={Typography} />
             <Route path="/app/tables" component={Tables} />
+            <Route path="/app/home" component={HomePage} />
             <Route path="/app/notifications" component={Notifications} />
             <Route
               exact

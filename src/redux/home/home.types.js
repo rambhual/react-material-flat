@@ -1,0 +1,5 @@
+export const homeTypes = {
+  HOME_START: "HOME_START",
+  HOME_SUCCESS: "HOME_SUCCESS",
+  HOME_FAILURE: "HOME_FAILURE",
+};

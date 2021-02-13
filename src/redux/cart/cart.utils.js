@@ -1,0 +1,27 @@
+export const addToCart = (cartItems, cartItemToAdd) => {
+  const existingCart = cartItems.find(
+    cartItem => cartItem.id === cartItemToAdd.id,
+  );
+  if (existingCart) {
+    return cartItems.map(cartItem =>
+      cartItem.id === existingCart.id
+        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+        : cartItem,
+    );
+  }
+  return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
+};
+
+export const removeFromCart = (cartItems, cartItemToAdd) => {
+  const existingCart = cartItems.find(
+    cartItem => cartItem.id === cartItemToAdd.id,
+  );
+  if (existingCart.quantity === 1) {
+    return cartItems.filter(cartItem => cartItem.id !== cartItemToAdd.id);
+  }
+  return cartItems.map(cartItem =>
+    cartItem.id === existingCart.id
+      ? { ...cartItem, quantity: cartItem.quantity - 1 }
+      : cartItem,
+  );
+};

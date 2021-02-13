@@ -9,6 +9,7 @@ import {
   Fab,
   Avatar,
 } from "@material-ui/core";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import {
   Menu as MenuIcon,
   MailOutline as MailIcon,
@@ -97,6 +98,7 @@ export default function Header(props) {
   var [mailMenu, setMailMenu] = useState(null);
   var [isMailsUnread, setIsMailsUnread] = useState(true);
   var [notificationsMenu, setNotificationsMenu] = useState(null);
+  var [cartMenu, setCartMenu] = useState(null);
   var [isNotificationsUnread, setIsNotificationsUnread] = useState(true);
   var [profileMenu, setProfileMenu] = useState(null);
   var [isSearchOpen, setSearchOpen] = useState(false);
@@ -158,6 +160,24 @@ export default function Header(props) {
         <IconButton
           color="inherit"
           aria-haspopup="true"
+          aria-controls="cart-menu"
+          onClick={e => {
+            setCartMenu(e.currentTarget);
+            console.log(e);
+          }}
+          className={classes.headerMenuButton}
+        >
+          <Badge
+            badgeContent={isNotificationsUnread ? notifications.length : null}
+            color="secondary"
+          >
+            <ShoppingBasketIcon classes={{ root: classes.headerIcon }} />
+          </Badge>
+        </IconButton>
+
+        <IconButton
+          color="inherit"
+          aria-haspopup="true"
           aria-controls="mail-menu"
           onClick={e => {
             setNotificationsMenu(e.currentTarget);
@@ -196,7 +216,7 @@ export default function Header(props) {
           aria-controls="profile-menu"
           onClick={e => setProfileMenu(e.currentTarget)}
         >
-          {currentUser.photoURL ? (
+          {currentUser.PhotoURL ? (
             <Avatar
               src={currentUser.photoURL}
               alt={currentUser.displayName}
@@ -265,6 +285,24 @@ export default function Header(props) {
           open={Boolean(notificationsMenu)}
           anchorEl={notificationsMenu}
           onClose={() => setNotificationsMenu(null)}
+          className={classes.headerMenu}
+          disableAutoFocusItem
+        >
+          {notifications.map(notification => (
+            <MenuItem
+              key={notification.id}
+              onClick={() => setNotificationsMenu(null)}
+              className={classes.headerMenuItem}
+            >
+              <Notification {...notification} typographyVariant="inherit" />
+            </MenuItem>
+          ))}
+        </Menu>
+        <Menu
+          id="cart-menu"
+          open={Boolean(cartMenu)}
+          anchorEl={cartMenu}
+          onClose={() => setCartMenu(null)}
           className={classes.headerMenu}
           disableAutoFocusItem
         >

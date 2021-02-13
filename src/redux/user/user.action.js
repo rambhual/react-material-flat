@@ -119,5 +119,4 @@ export const registerWithEmailAndPassword = payload => async dispatch => {
 export const logout = () => async dispatch => {
   await auth.signOut();
   dispatch({ type: authTypes.LOG_OUT_SUCCESS });
-  history.push("/login");
 };

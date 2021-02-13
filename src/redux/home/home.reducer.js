@@ -1,5 +1,3 @@
-import { homeTypes } from "./home.types";
-
 const initialState = {
   sections: [
     {

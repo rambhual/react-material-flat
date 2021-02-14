@@ -38,10 +38,10 @@ const structure = [
   },
   {
     id: 1,
-    label: "Typography",
-    link: "/app/typography",
+    label: "Check Out",
+    link: "/app/checkout",
     icon: <TypographyIcon />,
-    active: false,
+    active: true,
   },
   {
     id: 2,

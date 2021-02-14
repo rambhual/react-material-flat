@@ -9,7 +9,7 @@ export default function ShopPage() {
     <>
       <PageTitle title="Shop Page" />
       {collections.map(collection => (
-        <ShopItem {...collection} />
+        <ShopItem key={collection.id} {...collection} />
       ))}
     </>
   );

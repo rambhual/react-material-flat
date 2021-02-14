@@ -10,9 +10,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
+import { addCart } from "../../../redux/cart/cart.action";
 
 import useStyles from "../styles";
-import { addCart } from "../../../redux/cart/cart.action";
 
 function ShopCollections({ item }) {
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ function ShopCollections({ item }) {
         </IconButton>
 
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon color={`${wish ? "secondary" : ""}`} />
+          <FavoriteIcon color={`${wish ? "secondary" : "primary"}`} />
         </IconButton>
 
         <Typography component="h2">${price}</Typography>

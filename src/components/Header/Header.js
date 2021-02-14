@@ -34,6 +34,11 @@ import {
   toggleSidebar,
 } from "../../context/LayoutContext";
 import { logout } from "../../redux/user/user.action";
+import {
+  selectCartItems,
+  selectCartItemsTotal,
+} from "../../redux/cart/cart.selector";
+import CartItem from "../CartItem/CartItem";
 
 const messages = [
   {
@@ -92,6 +97,9 @@ export default function Header(props) {
   var classes = useStyles();
   const dispatch = useDispatch();
   const { currentUser } = useSelector(state => state.user);
+  const cartItems = useSelector(selectCartItems);
+  const totalCartItems = useSelector(selectCartItemsTotal);
+  console.info(cartItems, totalCartItems);
   var layoutState = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
 
@@ -168,7 +176,7 @@ export default function Header(props) {
           className={classes.headerMenuButton}
         >
           <Badge
-            badgeContent={isNotificationsUnread ? notifications.length : null}
+            badgeContent={totalCartItems ? totalCartItems : null}
             color="secondary"
           >
             <ShoppingBasketIcon classes={{ root: classes.headerIcon }} />
@@ -306,15 +314,20 @@ export default function Header(props) {
           className={classes.headerMenu}
           disableAutoFocusItem
         >
-          {notifications.map(notification => (
-            <MenuItem
-              key={notification.id}
-              onClick={() => setNotificationsMenu(null)}
-              className={classes.headerMenuItem}
-            >
-              <Notification {...notification} typographyVariant="inherit" />
+          {cartItems.map(cart => (
+            <MenuItem key={cart.id} className={classes.headerMenuItem}>
+              <CartItem {...cart} typographyVariant="inherit" />
             </MenuItem>
           ))}
+          <Fab
+            variant="extended"
+            color="primary"
+            aria-label="Add"
+            className={classes.sendMessageButton}
+          >
+            Go to cart
+            <SendIcon className={classes.sendButtonIcon} />
+          </Fab>
         </Menu>
         <Menu
           id="profile-menu"

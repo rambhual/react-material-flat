@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectCartItems } from "../../redux/cart/cart.selector";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import { addCart, removeCart } from "../../redux/cart/cart.action";
 
 export default function CheckoutPage() {
   const cartItems = useSelector(selectCartItems);
@@ -58,14 +59,20 @@ export default function CheckoutPage() {
                 <>
                   <ChevronLeftIcon
                     onClick={() => {
-                      console.log("tableMeta Left", tableMeta.rowData[0]);
+                      dispatch(
+                        addCart({
+                          id: tableMeta.rowData[0],
+                          imageUrl: tableMeta.rowData[1],
+                          name: tableMeta.rowData[2],
+                          quantity: tableMeta.rowData[3],
+                          price: tableMeta.rowData[4],
+                        }),
+                      );
                     }}
                   />
                   {value}
                   <ChevronRightIcon
-                    onClick={() =>
-                      console.log("tableMeta right", tableMeta.rowData[0])
-                    }
+                    onClick={() => dispatch(removeCart(tableMeta.rowData[0]))}
                   />
                 </>
               }

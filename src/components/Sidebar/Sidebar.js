@@ -41,7 +41,7 @@ const structure = [
     label: "Check Out",
     link: "/app/checkout",
     icon: <TypographyIcon />,
-    active: true,
+    active: false,
   },
   {
     id: 2,

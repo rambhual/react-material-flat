@@ -171,7 +171,6 @@ export default function Header(props) {
           aria-controls="cart-menu"
           onClick={e => {
             setCartMenu(e.currentTarget);
-            console.log(e);
           }}
           className={classes.headerMenuButton}
         >
@@ -323,6 +322,7 @@ export default function Header(props) {
             variant="extended"
             color="primary"
             aria-label="Add"
+            onClick={() => props.history.push("/app/checkout")}
             className={classes.sendMessageButton}
           >
             Go to cart

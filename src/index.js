@@ -9,20 +9,18 @@ import Themes from "./themes";
 import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
 import { LayoutProvider } from "./context/LayoutContext";
-import { UserProvider } from "./context/UserContext";
 import { store, persistor } from "./redux/store";
+
 ReactDOM.render(
   <LayoutProvider>
-    <UserProvider>
-      <ThemeProvider theme={Themes.default}>
-        <CssBaseline />
-        <Provider store={store}>
-          <PersistGate persistor={persistor}>
-            <App />
-          </PersistGate>
-        </Provider>
-      </ThemeProvider>
-    </UserProvider>
+    <ThemeProvider theme={Themes.default}>
+      <CssBaseline />
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </ThemeProvider>
   </LayoutProvider>,
   document.getElementById("root"),
 );

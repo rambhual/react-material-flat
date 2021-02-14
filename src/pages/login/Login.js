@@ -38,12 +38,10 @@ const Login = () => {
   const [activeTabId, setActiveTabId] = useState(0);
 
   const handleLoginSubmit = data => {
-    console.log("Login submitted", data);
     dispatch(loginWithEmailAndPassword(data));
   };
 
   const handleRegisterSubmit = data => {
-    console.log("Register submitted", data);
     dispatch(registerWithEmailAndPassword(data));
   };
   return (
